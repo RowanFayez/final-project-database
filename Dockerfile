@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     postgresql-18-postgis-3 \
     postgresql-18-pgrouting \
     uuid-runtime \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Create initialization directory
@@ -30,7 +31,9 @@ COPY scripts/gtfs-etl.sh /usr/local/bin/gtfs-etl.sh
 COPY gtfs-data /gtfs-data
 
 # Make all scripts executable
-RUN chmod +x /docker-entrypoint-initdb.d/*.sh \
+RUN dos2unix /docker-entrypoint-initdb.d/*.sh || true \
+    && dos2unix /usr/local/bin/*.sh || true \
+    && chmod +x /docker-entrypoint-initdb.d/*.sh \
     && chmod +x /usr/local/bin/*.sh
 
 # Set environment variables
