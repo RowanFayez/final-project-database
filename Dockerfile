@@ -6,8 +6,10 @@ RUN apt-get update && apt-get install -y \
     postgis \
     postgresql-18-postgis-3 \
     postgresql-18-pgrouting \
+    osm2pgrouting \
     uuid-runtime \
     dos2unix \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Create initialization directory
